@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-weight: bold;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        body{
+            background-color: #C7D3D4FF;
+        }
+        #main{
+            text-align: center;
+            margin-top: 100px;
+        }
+        input, .add{
+            padding: 10px 20px;
+            margin: 0px 10px;
+            color: #C7D3D4FF;
+            background-color: rgb(112, 65, 161);
+            border: none;
+            border-radius: 5px;
+        }
+        h1{
+            color: rgb(112, 65, 161);
+            text-align: center;
+            position: relative;
+            bottom: 30px;
+        }
+        input:focus{
+            outline: none; 
+        }
+  
+        div.todo1{
+            margin-top: 10px;
+            padding: 20px 20px;
+            color: #C7D3D4FF;
+            background-color: rgb(112, 65, 161);
+            width: 60%;
+            margin-left: 250px;
+            text-align: left;
+            border-radius: 10px;
+        }
+        div.todo1 li{
+            padding: 15px 30px;
+            font-size: large;
+            list-style: none;
+            position: relative;
+        }
+        div.todo1 button{
+            float: right;
+            color: rgb(112, 65, 161);
+            background-color: #C7D3D4FF;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            position: relative;
+            bottom: 10px;
+        }
+        @media only screen and (max-width: 1000px){
+            div.todo1{
+                position: relative;
+                right: 100px;
+            }
+            li{
+                position: relative;
+                left: 30px;
+            }
+            div.todo1 button{
+                position: relative;
+                right: 20px;
+            }
+        }
+        @media only screen and (max-width: 500px){
+            div.todo1{
+                position: relative;
+                right: 200px;
+            }
+            div.todo1 button{
+                position: relative;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>TO DO LIST</h1>
+        <div class="input">
+            <input type="text" id="text">
+            <button class="add" onclick="input()">Add</button>
+        </div>
+        <div id="todo" class="todo1"></div>
+        <br>
+    </div>
+
+<script>
+var trgt = document.getElementById("text");
+var todoDiv = document.getElementById("todo")
+function input() {
+    var todo = document.getElementById("main")
+    var todoli = document.createElement("li")
+    var liText = document.createTextNode(trgt.value)
+    todoli.appendChild(liText)
+    var dlt = document.createElement("button")
+    var dltText = document.createTextNode("Delete")
+    dlt.appendChild(dltText)
+    todoli.appendChild(dlt)
+    todoDiv.appendChild(todoli)
+    todo.appendChild(todoDiv)
+
+    if (trgt.value === "") {
+        alert("Please write some text")
+        todoDiv.style.display = "none"
+    }
+}
+
+todoDiv.addEventListener('click',function(rmv){
+    if(rmv.target.tagName === "LI"){
+        rmv.target.classList.toggle("list");
+        saveTask();
+    }else if(rmv.target.tagName === "BUTTON"){
+        rmv.target.parentElement.remove();
+        saveTask();
+    }
+},false);
+
+function saveTask() {
+    localStorage.setItem("myTask", todoDiv.innerText)
+}
+function showTask() {
+    localStorage.getItem("myTask")
+}
+
+</script>
+</body>
+</html>
